@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 760" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#444"/>
+    </marker>
+    <style>
+      .box{fill:#fff;stroke:#555;stroke-width:1.3;rx:8}
+      .local{fill:#e7f6ea;stroke:#2e7d32}
+      .api{fill:#e8f0fe;stroke:#1a56c4}
+      .code{fill:#fff8e1;stroke:#b7791f}
+      .safe{fill:#fdecea;stroke:#c62828}
+      .t{font-weight:600}
+      .s{fill:#444;font-size:11.5px}
+      .ln{stroke:#444;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .dash{stroke-dasharray:5 4}
+    </style>
+  </defs>
+  <rect width="1180" height="760" fill="#ffffff"/>
+  <text x="20" y="32" font-size="20" font-weight="700">Voice Data Analyst — system architecture</text>
+  <text x="20" y="52" class="s">Streamlit web UI · every stage is timed · numbers 1–10 = course modules</text>
+
+  <!-- legend -->
+  <rect x="800" y="18" width="16" height="12" class="box local"/><text x="822" y="29" class="s">runs locally (no API)</text>
+  <rect x="950" y="18" width="16" height="12" class="box api"/><text x="972" y="29" class="s">OpenAI API</text>
+  <rect x="800" y="38" width="16" height="12" class="box code"/><text x="822" y="49" class="s">plain Python code</text>
+  <rect x="950" y="38" width="16" height="12" class="box safe"/><text x="972" y="49" class="s">safety layer</text>
+
+  <!-- user -->
+  <rect x="20" y="90" width="120" height="60" class="box"/>
+  <text x="80" y="116" text-anchor="middle" class="t">User</text>
+  <text x="80" y="134" text-anchor="middle" class="s">speaks / types</text>
+
+  <!-- row 1 -->
+  <rect x="180" y="80" width="190" height="80" class="box local"/>
+  <text x="275" y="104" text-anchor="middle" class="t">1 · Voice input</text>
+  <text x="275" y="122" text-anchor="middle" class="s">faster-whisper small.en</text>
+  <text x="275" y="138" text-anchor="middle" class="s">GPU (CUDA) or CPU</text>
+
+  <rect x="400" y="80" width="170" height="80" class="box safe"/>
+  <text x="485" y="104" text-anchor="middle" class="t">Request check</text>
+  <text x="485" y="122" text-anchor="middle" class="s">delete / drop / passwords /</text>
+  <text x="485" y="138" text-anchor="middle" class="s">prompt injection → refuse</text>
+
+  <rect x="600" y="80" width="230" height="80" class="box code"/>
+  <text x="715" y="104" text-anchor="middle" class="t">2 · Domain-word correction</text>
+  <text x="715" y="122" text-anchor="middle" class="s">transcript n-grams vs real DB values</text>
+  <text x="715" y="138" text-anchor="middle" class="s">spelling (rapidfuzz) + sound (metaphone)</text>
+
+  <rect x="860" y="80" width="300" height="80" class="box api"/>
+  <text x="1010" y="104" text-anchor="middle" class="t">3 · Schema selection</text>
+  <text x="1010" y="122" text-anchor="middle" class="s">embeddings of table cards + value hints</text>
+  <text x="1010" y="138" text-anchor="middle" class="s">top tables + join "bridge" tables only</text>
+
+  <path class="ln" d="M140,120 H180"/>
+  <path class="ln" d="M370,120 H400"/>
+  <path class="ln" d="M570,120 H600"/>
+  <path class="ln" d="M830,120 H860"/>
+
+  <!-- data sources -->
+  <rect x="20" y="210" width="300" height="200" class="box"/>
+  <text x="170" y="234" text-anchor="middle" class="t">4 · Data sources (read-only)</text>
+  <rect x="40" y="248" width="125" height="44" class="box"/><text x="102" y="267" text-anchor="middle" class="s">PostgreSQL</text><text x="102" y="283" text-anchor="middle" class="s">Olist e-commerce</text>
+  <rect x="175" y="248" width="125" height="44" class="box"/><text x="237" y="267" text-anchor="middle" class="s">SQLite</text><text x="237" y="283" text-anchor="middle" class="s">marketing funnel</text>
+  <rect x="40" y="302" width="125" height="44" class="box"/><text x="102" y="321" text-anchor="middle" class="s">Uploaded CSVs</text><text x="102" y="337" text-anchor="middle" class="s">→ uploads.db</text>
+  <rect x="175" y="302" width="125" height="44" class="box"/><text x="237" y="321" text-anchor="middle" class="s">Any connection</text><text x="237" y="337" text-anchor="middle" class="s">string / .db file</text>
+  <text x="170" y="372" text-anchor="middle" class="s">SQLAlchemy · read-only sessions</text>
+  <text x="170" y="390" text-anchor="middle" class="s">statement timeout · row limit</text>
+
+  <rect x="360" y="230" width="230" height="90" class="box code"/>
+  <text x="475" y="254" text-anchor="middle" class="t">3 · Schema profiler</text>
+  <text x="475" y="272" text-anchor="middle" class="s">tables, columns, kinds, row counts,</text>
+  <text x="475" y="288" text-anchor="middle" class="s">distinct values, date ranges,</text>
+  <text x="475" y="304" text-anchor="middle" class="s">declared + inferred joins (cached)</text>
+  <path class="ln" d="M320,275 H360"/>
+  <path class="ln dash" d="M590,250 C680,240 700,190 715,162"/>
+  <text x="640" y="205" class="s">vocabulary</text>
+  <path class="ln dash" d="M590,270 C800,260 960,220 1000,162"/>
+  <text x="850" y="232" class="s">table cards</text>
+
+  <!-- row 2 -->
+  <rect x="860" y="290" width="300" height="110" class="box api"/>
+  <text x="1010" y="314" text-anchor="middle" class="t">5/7/9 · Planner (LLM, JSON)</text>
+  <text x="1010" y="334" text-anchor="middle" class="s">action = sql | clarify | refuse</text>
+  <text x="1010" y="352" text-anchor="middle" class="s">picks the source + writes its dialect</text>
+  <text x="1010" y="370" text-anchor="middle" class="s">follow-ups edit the previous SQL</text>
+  <text x="1010" y="388" text-anchor="middle" class="s">(gets last turns' SQL as context)</text>
+  <path class="ln" d="M1010,160 V290"/>
+
+  <rect x="620" y="300" width="200" height="90" class="box safe"/>
+  <text x="720" y="324" text-anchor="middle" class="t">SQL guard (sqlglot)</text>
+  <text x="720" y="342" text-anchor="middle" class="s">one SELECT only, no DDL/DML,</text>
+  <text x="720" y="358" text-anchor="middle" class="s">no system tables, no sleep /</text>
+  <text x="720" y="374" text-anchor="middle" class="s">file / dblink functions</text>
+  <path class="ln" d="M860,345 H820"/>
+  <text x="826" y="337" class="s">sql</text>
+
+  <rect x="380" y="430" width="230" height="80" class="box code"/>
+  <text x="495" y="454" text-anchor="middle" class="t">5 · Execute query</text>
+  <text x="495" y="472" text-anchor="middle" class="s">on the chosen source</text>
+  <text x="495" y="488" text-anchor="middle" class="s">(read-only connection)</text>
+  <path class="ln" d="M700,390 C690,420 640,450 610,465"/>
+  <path class="ln dash" d="M380,470 C320,460 250,440 200,412"/>
+
+  <rect x="640" y="430" width="200" height="80" class="box api"/>
+  <text x="740" y="454" text-anchor="middle" class="t">6 · Self-repair</text>
+  <text x="740" y="472" text-anchor="middle" class="s">error / empty / all-NULL →</text>
+  <text x="740" y="488" text-anchor="middle" class="s">LLM fixes SQL (max 2 retries)</text>
+  <path class="ln" d="M610,490 H640"/>
+  <path class="ln" d="M760,430 C770,410 760,400 750,392"/>
+
+  <!-- clarify path -->
+  <rect x="900" y="440" width="260" height="70" class="box"/>
+  <text x="1030" y="464" text-anchor="middle" class="t">7 · Spoken clarification</text>
+  <text x="1030" y="482" text-anchor="middle" class="s">"By revenue or by number of orders?"</text>
+  <text x="1030" y="498" text-anchor="middle" class="s">answer is merged with the question</text>
+  <path class="ln" d="M1060,400 V440"/>
+  <text x="1066" y="424" class="s">clarify</text>
+
+  <!-- row 3 -->
+  <rect x="380" y="560" width="230" height="90" class="box code"/>
+  <text x="495" y="584" text-anchor="middle" class="t">8 · Chart + table + facts</text>
+  <text x="495" y="602" text-anchor="middle" class="s">line / bar / metric chosen from</text>
+  <text x="495" y="618" text-anchor="middle" class="s">result shape; peak, average, share</text>
+  <text x="495" y="634" text-anchor="middle" class="s">computed in code (no made-up numbers)</text>
+  <path class="ln" d="M495,510 V560"/>
+
+  <rect x="640" y="560" width="200" height="90" class="box api"/>
+  <text x="740" y="584" text-anchor="middle" class="t">8 · Spoken explanation</text>
+  <text x="740" y="602" text-anchor="middle" class="s">1–3 sentences from the facts,</text>
+  <text x="740" y="618" text-anchor="middle" class="s">no table reading</text>
+  <path class="ln" d="M610,605 H640"/>
+
+  <rect x="870" y="560" width="190" height="90" class="box local"/>
+  <text x="965" y="584" text-anchor="middle" class="t">8 · Text to speech</text>
+  <text x="965" y="602" text-anchor="middle" class="s">Piper en_US-lessac</text>
+  <text x="965" y="618" text-anchor="middle" class="s">(local, CPU)</text>
+  <path class="ln" d="M840,605 H870"/>
+  <path class="ln" d="M1030,510 V530 H965 V560"/>
+  <path class="ln" d="M1160,330 H1172 V630 H1062"/>
+  <text x="1166" y="548" class="s" text-anchor="end">refuse /</text>
+  <text x="1166" y="562" class="s" text-anchor="end">blocked</text>
+
+  <rect x="20" y="560" width="300" height="140" class="box"/>
+  <text x="170" y="584" text-anchor="middle" class="t">Streamlit UI shows</text>
+  <text x="40" y="606" class="s">• transcript + corrections made</text>
+  <text x="40" y="624" class="s">• chart and table</text>
+  <text x="40" y="642" class="s">• the SQL that ran, repairs, assumptions</text>
+  <text x="40" y="660" class="s">• audio answer (autoplay)</text>
+  <text x="40" y="678" class="s">• time per stage</text>
+  <path class="ln" d="M965,650 V668 H322"/>
+  <text x="640" y="662" class="s">audio + text answer</text>
+  <path class="ln dash" d="M340,560 V185 H80 V152"/>
+  <text x="30" y="470" class="s">next question /</text>
+  <text x="30" y="486" class="s">follow-up /</text>
+  <text x="30" y="502" class="s">clarification answer</text>
+
+  <rect x="380" y="690" width="460" height="56" class="box code"/>
+  <text x="610" y="713" text-anchor="middle" class="t">10 · Evaluation (eval/run_eval.py → eval/REPORT.md)</text>
+  <text x="610" y="731" text-anchor="middle" class="s">domain-word accuracy before/after · latency per stage · attack questions · SQL accuracy</text>
+</svg>
